@@ -10,19 +10,23 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.onestock.navigation.SetupNavGraph
 import com.example.onestock.ui.theme.OneStockTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var navController: NavHostController
         setContent {
-            OneStockTheme {
-                // A surface container using the 'background' color from the theme
+            OneStockTheme() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    navController = rememberNavController()
+                    SetupNavGraph(navController)
                 }
             }
         }
