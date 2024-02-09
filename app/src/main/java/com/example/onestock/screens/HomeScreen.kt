@@ -27,7 +27,7 @@ fun HomeScreen(navController: NavHostController, stockViewModel: StockViewModel)
 
 
 
-    stockViewModel.getStockData("AAPL", "1min")
+    //stockViewModel.getStockData("AAPL", "1min")
 
     val stockData by stockViewModel.stockData.observeAsState()
 

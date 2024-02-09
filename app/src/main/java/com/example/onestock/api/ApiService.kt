@@ -20,6 +20,11 @@ interface ApiService {
             @Query("apikey") apiKey: String
         ): Call<List<StockInfo>>
 
+        @GET("stock_market/actives")
+        fun getMostActive(
+            @Query("apikey") apiKey: String
+        ): Call<List<Quote>>
+
         @GET("search")
         fun getGeneralSearch(
             @Query("query") query: String,

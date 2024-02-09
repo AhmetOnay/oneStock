@@ -13,7 +13,7 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
 
     val timeSeriesData = MutableLiveData<TimeSeries>()
     val stocksListData = MutableLiveData<List<StockInfo>>()
-    var stockData = MutableLiveData<StocksList>()
+    val mostActiveData = MutableLiveData<List<Quote>>()
     var balanceSheetData = MutableLiveData<BalanceSheet>()
     var quoteData = MutableLiveData<Quote>()
     var generalSearchData = MutableLiveData<List<StockInfo>>()
@@ -60,7 +60,25 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
             }
         })
     }
+    fun fetchMostActive(apiKey: String) {
+        FMPApi.getMostActive(apiKey).enqueue(object : Callback<List<Quote>> {
+            override fun onResponse(
+                call: Call<List<Quote>>, response: Response<List<Quote>>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let { responseBody ->
+                        mostActiveData.postValue(responseBody)
+                    }
+                } else {
+                    print("error: fetchMostActive")
+                }
+            }
 
+            override fun onFailure(call: Call<List<Quote>>, t: Throwable) {
+                print(call);
+            }
+        })
+    }
     fun fetchGeneralSearch(symbol: String, apiKey: String){
         FMPApi.getGeneralSearch(symbol, apiKey).enqueue(object : Callback<List<StockInfo>> {
             override fun onResponse(

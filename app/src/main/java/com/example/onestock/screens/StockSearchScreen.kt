@@ -18,7 +18,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun StockSearchScreen(navController: NavHostController, stockViewModel: StockViewModel) {
     var searchText by remember { mutableStateOf("") }
-    val searchResults by stockViewModel.generalSearchResults.observeAsState()
+    val searchResults by stockViewModel.generalSearchData.observeAsState()
 
     LaunchedEffect(searchText) {
         delay(1000)

@@ -10,15 +10,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.NavHostController
-import com.example.onestock.models.StockInfo
+import com.example.onestock.models.Quote
 import com.example.onestock.navigation.Screens
 import com.example.onestock.viewmodels.StockViewModel
 
 
 @Composable
 fun StocksList(navController: NavHostController, stockViewModel: StockViewModel) {
-    val stocksListResponse by stockViewModel.stocksList.observeAsState()
-    val stocksList = stocksListResponse ?: emptyList()
+    val stocksL by stockViewModel.mostActiveData.observeAsState()
+    val stocksList = stocksL ?: emptyList()
 
     LazyColumn {
         items(stocksList) { stock ->
@@ -30,7 +30,7 @@ fun StocksList(navController: NavHostController, stockViewModel: StockViewModel)
 }
 
 @Composable
-fun StockItem(stock: StockInfo, onItemClick: () -> Unit) {
+fun StockItem(stock: Quote, onItemClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,10 +46,6 @@ fun StockItem(stock: StockInfo, onItemClick: () -> Unit) {
             Text(
                 text = "Symbol: ${stock.symbol}",
                 style = MaterialTheme.typography.subtitle1
-            )
-            Text(
-                text = "Exchange: ${stock.exchange}",
-                style = MaterialTheme.typography.subtitle2
             )
         }
     }

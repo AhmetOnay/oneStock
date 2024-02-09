@@ -14,8 +14,8 @@ import com.example.onestock.widgets.QuoteWidget
 
 @Composable
 fun StockDetailScreen(viewModel: StockViewModel, navController: NavHostController, symbol: String) {
-    val balanceSheetData by viewModel.balanceSheet.observeAsState()
-    val quoteData by viewModel.quote.observeAsState()
+    val balanceSheetData by viewModel.balanceSheetData.observeAsState()
+    val quoteData by viewModel.quoteData.observeAsState()
 
     LaunchedEffect(symbol) {
         viewModel.getBalanceSheetInfo(symbol)
