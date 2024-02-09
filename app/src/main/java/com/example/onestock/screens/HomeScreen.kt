@@ -6,17 +6,31 @@ import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Observer
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.onestock.viewmodels.InjectorUtils
+import com.example.onestock.viewmodels.StockViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(navController: NavHostController, stockViewModel: StockViewModel) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val tabs = listOf("Watchlist", "Trending", "Search")
     var selectedTabIndex by remember { mutableStateOf(1) }
+    val currentContext = LocalContext.current
+
+
+
+    stockViewModel.getStockData("AAPL", "1min")
+
+    val stockData by stockViewModel.stockData.observeAsState()
+
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -62,9 +76,9 @@ fun HomeScreen(navController: NavHostController) {
             }
 
             when (selectedTabIndex) {
-                0 -> StockList("Watchlist")
-                1 -> StockList("Trending")
-                2 -> StockList("Search")
+                0 -> stockData?.meta?.currency?.let { StockList("Watchlist", it) }
+                1 -> StocksList(navController, stockViewModel)
+                2 -> StockSearchScreen(navController, stockViewModel)
             }
         }
     }
@@ -72,22 +86,19 @@ fun HomeScreen(navController: NavHostController) {
 
 @Composable
 fun DrawerHeader() {
-    // Implement your drawer header here
     Text("One Stock", style = MaterialTheme.typography.h6, modifier = Modifier.padding(16.dp))
 }
 
 @Composable
 fun DrawerBody() {
-    // Implement your drawer body here
     Text("News", modifier = Modifier.padding(16.dp))
     Text("Zakat", modifier = Modifier.padding(16.dp))
-    // Add more items as needed
 }
 
 @Composable
-fun StockList(category: String) {
+fun StockList(category: String, txt: String) {
     Column(modifier = Modifier.padding(16.dp)) {
         Text("List of $category", style = MaterialTheme.typography.h6)
-        // Here, you would fetch and display your stock data
+        Text("$txt", style = MaterialTheme.typography.h6)
     }
 }
