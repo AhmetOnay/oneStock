@@ -18,8 +18,9 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
     var quoteData = MutableLiveData<Quote>()
     var generalSearchData = MutableLiveData<List<StockInfo>>()
 
+    val apiKey = "5qrH2plVtrYf8zlY8RxQLo16b0xgaOau"
 
-    fun fetchTimeSeries(symbols: String, interval: String, apiKey: String) {
+    fun fetchTimeSeries(symbols: String, interval: String) {
         FMPApi.getTimeSeries(symbols, interval, apiKey)
             .enqueue(object : Callback<TimeSeries> {
                 override fun onResponse(
@@ -41,7 +42,7 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
             })
     }
 
-    fun fetchStocksList(apiKey: String) {
+    fun fetchStocksList() {
         FMPApi.getStocksList(apiKey).enqueue(object : Callback<List<StockInfo>> {
             override fun onResponse(
                 call: Call<List<StockInfo>>, response: Response<List<StockInfo>>
@@ -60,7 +61,7 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
             }
         })
     }
-    fun fetchMostActive(apiKey: String) {
+    fun fetchMostActive() {
         FMPApi.getMostActive(apiKey).enqueue(object : Callback<List<Quote>> {
             override fun onResponse(
                 call: Call<List<Quote>>, response: Response<List<Quote>>
@@ -79,7 +80,7 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
             }
         })
     }
-    fun fetchGeneralSearch(symbol: String, apiKey: String){
+    fun fetchGeneralSearch(symbol: String){
         FMPApi.getGeneralSearch(symbol, apiKey).enqueue(object : Callback<List<StockInfo>> {
             override fun onResponse(
                 call: Call<List<StockInfo>>, response: Response<List<StockInfo>>
@@ -103,7 +104,7 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
         })
     }
 
-    fun fetchBalanceSheet(symbol: String, apiKey: String) {
+    fun fetchBalanceSheet(symbol: String) {
         FMPApi.getBalanceSheet(symbol, apiKey).enqueue(object : Callback<List<BalanceSheet>> {
                 override fun onResponse(
                     call: Call<List<BalanceSheet>>, response: Response<List<BalanceSheet>>
@@ -128,7 +129,7 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
             })
     }
 
-    fun fetchQuote(symbol: String, apiKey: String) {
+    fun fetchQuote(symbol: String) {
         FMPApi.getQuote(symbol, apiKey).enqueue(object : Callback<List<Quote>> {
             override fun onResponse(
                 call: Call<List<Quote>>, response: Response<List<Quote>>

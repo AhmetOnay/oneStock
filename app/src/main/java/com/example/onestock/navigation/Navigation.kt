@@ -23,7 +23,7 @@ fun SetupNavGraph(
         }
         composable(route = Screens.StockDetail.route) { backStackEntry ->
             val symbol = requireNotNull(backStackEntry.arguments?.getString("symbol"))
-            StockDetailScreen(stockViewModel, navController, symbol)
+            StockDetailScreen(navController, symbol)
         }
     }
 }

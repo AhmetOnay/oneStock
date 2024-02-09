@@ -10,12 +10,10 @@ class StockViewModel(private val dataRepository: DataRepository) : ViewModel() {
     val stockData: LiveData<TimeSeries> = dataRepository.timeSeriesData
     val stocksListData: LiveData<List<StockInfo>> = dataRepository.stocksListData
     val mostActiveData: LiveData<List<Quote>> = dataRepository.mostActiveData
-    val balanceSheetData: LiveData<BalanceSheet> = dataRepository.balanceSheetData
-    val quoteData: LiveData<Quote> = dataRepository.quoteData
+
     var generalSearchData: LiveData<List<StockInfo>> = dataRepository.generalSearchData
 
 
-    val apiKey = "5qrH2plVtrYf8zlY8RxQLo16b0xgaOau"
 
     init {
         //getStocksList()
@@ -23,29 +21,24 @@ class StockViewModel(private val dataRepository: DataRepository) : ViewModel() {
     }
 
     fun getStockData(symbols: String, interval: String) {
-        dataRepository.fetchTimeSeries(symbols, interval, apiKey)
+        dataRepository.fetchTimeSeries(symbols, interval)
     }
 
     private fun getStocksList() {
-        dataRepository.fetchStocksList(apiKey)
+        dataRepository.fetchStocksList()
     }
 
     private fun getMostActive(){
-        dataRepository.fetchMostActive(apiKey)
+        dataRepository.fetchMostActive()
     }
 
     fun generalSearch(txt: String){
         if (txt.isNotBlank()) {
-            dataRepository.fetchGeneralSearch(txt, apiKey)
+            dataRepository.fetchGeneralSearch(txt)
         }
     }
 
-    fun getBalanceSheetInfo(txt: String){
-        dataRepository.fetchBalanceSheet(txt, apiKey)
-    }
-    fun getQuoteInfo(txt: String){
-        dataRepository.fetchQuote(txt, apiKey)
-    }
+
 
 }
 

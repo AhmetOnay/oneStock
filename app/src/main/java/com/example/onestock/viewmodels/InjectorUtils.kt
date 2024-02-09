@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object InjectorUtils {
 
-    private fun getTwelveDataApi(): ApiService.FMPApi {
+    private fun getFMPApi(): ApiService.FMPApi {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://financialmodelingprep.com/api/v3/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -17,13 +17,18 @@ object InjectorUtils {
     }
 
     private fun getDataRepository(): DataRepository {
-        val twelveDataApi = getTwelveDataApi()
-        return DataRepository(twelveDataApi)
+        val fmpApi = getFMPApi()
+        return DataRepository(fmpApi)
     }
 
     fun provideStockViewModelFactory(): StockViewModelFactory {
         val repository = getDataRepository()
         return StockViewModelFactory(repository)
+    }
+
+    fun provideStockDetailScreenViewModelFactory(): StockDetailViewModelFactory {
+        val repository = getDataRepository()
+        return StockDetailViewModelFactory(repository)
     }
 
 }
