@@ -22,7 +22,7 @@ interface StockDao {
     fun getAllStocks(): Flow<List<Stock>>
 
     @Query("SELECT * FROM Stock WHERE symbol=:symbol")
-    fun getStockBySymbol(symbol: String): Flow<Stock>
+    fun getStockBySymbol(symbol: String): Flow<Stock?>
 
 
 }

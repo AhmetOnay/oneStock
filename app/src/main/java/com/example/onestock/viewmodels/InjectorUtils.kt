@@ -1,7 +1,10 @@
 package com.example.onestock.viewmodels
 
+import android.content.Context
 import com.example.onestock.api.ApiService
+import com.example.onestock.data.OneStockDatabase
 import com.example.onestock.repositories.DataRepository
+import com.example.onestock.repositories.StockRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -21,14 +24,19 @@ object InjectorUtils {
         return DataRepository(fmpApi)
     }
 
+    private fun getStockRepository(context: Context): StockRepository  {
+        return StockRepository.getInstance(OneStockDatabase.getDatabase(context.applicationContext).stockDao())
+    }
+
     fun provideStockViewModelFactory(): StockViewModelFactory {
         val repository = getDataRepository()
         return StockViewModelFactory(repository)
     }
 
-    fun provideStockDetailScreenViewModelFactory(): StockDetailViewModelFactory {
+    fun provideStockDetailScreenViewModelFactory(context: Context): StockDetailViewModelFactory {
         val repository = getDataRepository()
-        return StockDetailViewModelFactory(repository)
+        val stockRepository = getStockRepository(context)
+        return StockDetailViewModelFactory(repository, stockRepository)
     }
 
 }

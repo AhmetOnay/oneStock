@@ -16,13 +16,21 @@ import androidx.navigation.NavHostController
 import com.example.onestock.viewmodels.InjectorUtils
 import com.example.onestock.viewmodels.StockDetailViewModel
 import com.example.onestock.widgets.QuoteWidget
+import kotlinx.coroutines.launch
 
 @Composable
-fun StockDetailScreen( navController: NavHostController, symbol: String) {
-    val viewModel : StockDetailViewModel = viewModel(factory = InjectorUtils.provideStockDetailScreenViewModelFactory())
+fun StockDetailScreen(navController: NavHostController, symbol: String) {
+    val currentContext = LocalContext.current
+    val viewModel: StockDetailViewModel = viewModel(
+        factory = InjectorUtils.provideStockDetailScreenViewModelFactory(
+            currentContext
+        )
+    )
     val balanceSheetData by viewModel.balanceSheetData.observeAsState()
     val quoteData by viewModel.quoteData.observeAsState()
-    var isFavorite by remember { mutableStateOf(false) }
+    val stock by viewModel.getStock(symbol).collectAsState(initial = null)
+    val isFavorite by remember { derivedStateOf { stock != null } }
+    val scope = rememberCoroutineScope()
     LaunchedEffect(symbol) {
         viewModel.getBalanceSheetInfo(symbol)
         viewModel.getQuoteInfo(symbol)
@@ -32,24 +40,33 @@ fun StockDetailScreen( navController: NavHostController, symbol: String) {
         topBar = {
             TopAppBar(title = { Text("Stock Detail Screen") },
                 navigationIcon = if (navController.previousBackStackEntry != null) {
-                {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
+                    {
+                        IconButton(onClick = { navController.navigateUp() }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "Back"
+                            )
+                        }
                     }
-                }
-            } else {
-                null
-            },
+                } else {
+                    null
+                },
                 actions = {
-                    IconButton(onClick = { isFavorite = !isFavorite }) {
+                    IconButton(onClick = {
+                        scope.launch {
+                            if (!isFavorite) {
+                                viewModel.saveStock(symbol)
+                            } else {
+                                viewModel.deleteStock(symbol)
+                            }
+                        }
+                    }) {
                         Icon(
                             imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                             contentDescription = if (isFavorite) "Remove from Favorites" else "Add to Favorites"
                         )
-                    }})
+                    }
+                })
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {

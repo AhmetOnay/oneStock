@@ -23,7 +23,6 @@ fun HomeScreen(navController: NavHostController, stockViewModel: StockViewModel)
     val scope = rememberCoroutineScope()
     val tabs = listOf("Watchlist", "Trending", "Search")
     var selectedTabIndex by remember { mutableStateOf(1) }
-    val currentContext = LocalContext.current
 
 
 
