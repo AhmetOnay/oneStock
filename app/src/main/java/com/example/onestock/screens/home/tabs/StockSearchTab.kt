@@ -16,7 +16,7 @@ import com.example.onestock.viewmodels.StockViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun StockSearchScreen(navController: NavHostController, stockViewModel: StockViewModel) {
+fun StockSearchTab(navController: NavHostController, stockViewModel: StockViewModel) {
     var searchText by remember { mutableStateOf("") }
     val searchResults by stockViewModel.generalSearchData.observeAsState()
 

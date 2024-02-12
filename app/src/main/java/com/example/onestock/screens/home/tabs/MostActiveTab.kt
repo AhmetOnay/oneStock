@@ -16,13 +16,13 @@ import com.example.onestock.viewmodels.StockViewModel
 
 
 @Composable
-fun StocksList(navController: NavHostController, stockViewModel: StockViewModel) {
+fun MostActiveTab(navController: NavHostController, stockViewModel: StockViewModel) {
     val stocksL by stockViewModel.mostActiveData.observeAsState()
     val stocksList = stocksL ?: emptyList()
 
     LazyColumn {
         items(stocksList) { stock ->
-            StockItem(stock) {
+            MostActiveItem(stock) {
                 navController.navigate(Screens.StockDetail.createRoute(stock.symbol))
             }
         }
@@ -30,7 +30,7 @@ fun StocksList(navController: NavHostController, stockViewModel: StockViewModel)
 }
 
 @Composable
-fun StockItem(stock: Quote, onItemClick: () -> Unit) {
+fun MostActiveItem(stock: Quote, onItemClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

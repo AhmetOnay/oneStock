@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.onestock.navigation.SetupNavGraph
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     navController = rememberNavController()
-                    SetupNavGraph(navController)
+                    SetupNavGraph(navController, LocalContext.current)
                 }
             }
         }

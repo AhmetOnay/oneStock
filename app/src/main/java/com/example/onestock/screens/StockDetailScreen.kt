@@ -2,6 +2,7 @@ package com.example.onestock.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
@@ -13,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.onestock.models.Quote
 import com.example.onestock.viewmodels.InjectorUtils
 import com.example.onestock.viewmodels.StockDetailViewModel
 import com.example.onestock.widgets.QuoteWidget
@@ -28,9 +30,13 @@ fun StockDetailScreen(navController: NavHostController, symbol: String) {
     )
     val balanceSheetData by viewModel.balanceSheetData.observeAsState()
     val quoteData by viewModel.quoteData.observeAsState()
+
     val stock by viewModel.getStock(symbol).collectAsState(initial = null)
-    val isFavorite by remember { derivedStateOf { stock != null } }
+    val isInWatchlist by remember { derivedStateOf { stock != null } }
+    var selectedTabIndex by remember { mutableStateOf(0) }
+    val tabs = listOf("Dashboard", "Note")
     val scope = rememberCoroutineScope()
+
     LaunchedEffect(symbol) {
         viewModel.getBalanceSheetInfo(symbol)
         viewModel.getQuoteInfo(symbol)
@@ -54,7 +60,7 @@ fun StockDetailScreen(navController: NavHostController, symbol: String) {
                 actions = {
                     IconButton(onClick = {
                         scope.launch {
-                            if (!isFavorite) {
+                            if (!isInWatchlist) {
                                 viewModel.saveStock(symbol)
                             } else {
                                 viewModel.deleteStock(symbol)
@@ -62,23 +68,37 @@ fun StockDetailScreen(navController: NavHostController, symbol: String) {
                         }
                     }) {
                         Icon(
-                            imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                            contentDescription = if (isFavorite) "Remove from Favorites" else "Add to Favorites"
+                            imageVector = if (isInWatchlist) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                            contentDescription = if (isInWatchlist) "Remove from Favorites" else "Add to Favorites"
                         )
                     }
                 })
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                quoteData?.let { quote ->
-                    QuoteWidget(quote = quote)
-                    Divider(modifier = Modifier.padding(vertical = 16.dp))
+            TabRow(
+                selectedTabIndex = selectedTabIndex,
+                backgroundColor = MaterialTheme.colors.secondary,
+                indicator = { tabPositions ->
+                    TabRowDefaults.Indicator(
+                        Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                        color = MaterialTheme.colors.onPrimary,
+                        height = 3.dp
+                    )
                 }
+            ) {
+                tabs.forEachIndexed { index, title ->
+                    Tab(
+                        text = { Text(title, color = MaterialTheme.colors.onPrimary) },
+                        selected = index == selectedTabIndex,
+                        onClick = { selectedTabIndex = index }
+                    )
+                }
+            }
 
-                balanceSheetData?.let { balanceSheet ->
-                    BalanceSheetWidget(balanceSheet = balanceSheet)
-                }
+            when (selectedTabIndex) {
+                0 -> DashboardTab(balanceSheetData, quoteData, innerPadding)
+                //1 -> DashboardTab(balanceSheetData, quoteData, innerPadding)
             }
         }
     }

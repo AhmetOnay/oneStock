@@ -14,6 +14,7 @@ class StockRepository(private val stockDao: StockDao) {
     suspend fun deleteAllStocks() = stockDao.deleteAll()
 
     fun getAllStocks() = stockDao.getAllStocks()
+    fun getAllStocksSymbols() = stockDao.getAllStocksSymbols()
 
     fun getStockBySymbol(symbol: String) = stockDao.getStockBySymbol(symbol)
 

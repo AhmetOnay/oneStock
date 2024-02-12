@@ -1,21 +1,32 @@
 package com.example.onestock.viewmodels
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.*
 import com.example.onestock.models.*
 import com.example.onestock.repositories.DataRepository
+import com.example.onestock.repositories.StockRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.forEach
+import kotlinx.coroutines.launch
 
-class StockViewModel(private val dataRepository: DataRepository) : ViewModel() {
+class StockViewModel(private val dataRepository: DataRepository, private val stockRepository: StockRepository) : ViewModel() {
 
     val stockData: LiveData<TimeSeries> = dataRepository.timeSeriesData
-    val stocksListData: LiveData<List<StockInfo>> = dataRepository.stocksListData
+    val savedStocksQuotesLiveData = MutableLiveData<List<Quote>>()
+    //val stocksListData: LiveData<List<StockInfo>> = dataRepository.stocksListData
     val mostActiveData: LiveData<List<Quote>> = dataRepository.mostActiveData
-
     var generalSearchData: LiveData<List<StockInfo>> = dataRepository.generalSearchData
-
+    private val _symbols = MutableStateFlow(listOf<String>())
+    val symbols: StateFlow<List<String>> = _symbols.asStateFlow()
 
 
     init {
+        viewModelScope.launch {
+            stockRepository.getAllStocksSymbols().collect { symbols ->
+                _symbols.value = symbols
+            }
+        }
         //getStocksList()
         getMostActive()
     }
@@ -26,6 +37,17 @@ class StockViewModel(private val dataRepository: DataRepository) : ViewModel() {
 
     private fun getStocksList() {
         dataRepository.fetchStocksList()
+    }
+
+    fun getSavedStocksQuotesLiveData() {
+        viewModelScope.launch {
+            val quotes = mutableListOf<Quote>()
+            symbols.value.forEach { symbol ->
+                val quote = dataRepository.fetchQuote2(symbol)
+                quote?.let { quotes.add(it) }
+            }
+            savedStocksQuotesLiveData.postValue(quotes)
+        }
     }
 
     private fun getMostActive(){

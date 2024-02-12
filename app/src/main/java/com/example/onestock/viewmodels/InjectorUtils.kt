@@ -28,9 +28,10 @@ object InjectorUtils {
         return StockRepository.getInstance(OneStockDatabase.getDatabase(context.applicationContext).stockDao())
     }
 
-    fun provideStockViewModelFactory(): StockViewModelFactory {
+    fun provideStockViewModelFactory(context: Context): StockViewModelFactory {
         val repository = getDataRepository()
-        return StockViewModelFactory(repository)
+        val stockRepository = getStockRepository(context)
+        return StockViewModelFactory(repository, stockRepository)
     }
 
     fun provideStockDetailScreenViewModelFactory(context: Context): StockDetailViewModelFactory {

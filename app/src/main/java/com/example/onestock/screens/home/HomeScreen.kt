@@ -8,12 +8,9 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Observer
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.onestock.viewmodels.InjectorUtils
+import com.example.onestock.repositories.StockRepository
 import com.example.onestock.viewmodels.StockViewModel
 import kotlinx.coroutines.launch
 
@@ -75,9 +72,9 @@ fun HomeScreen(navController: NavHostController, stockViewModel: StockViewModel)
             }
 
             when (selectedTabIndex) {
-                0 -> stockData?.meta?.currency?.let { StockList("Watchlist", it) }
-                1 -> StocksList(navController, stockViewModel)
-                2 -> StockSearchScreen(navController, stockViewModel)
+                0 -> WatchlistTab(navController = navController, stockViewModel = stockViewModel)
+                1 -> MostActiveTab(navController, stockViewModel)
+                2 -> StockSearchTab(navController, stockViewModel)
             }
         }
     }

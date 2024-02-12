@@ -8,6 +8,5 @@ data class Stock(
     @PrimaryKey
     val symbol: String,
     val name: String,
-    val favourite: Boolean,
     val note: String
     )

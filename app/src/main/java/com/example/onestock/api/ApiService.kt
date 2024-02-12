@@ -1,7 +1,7 @@
 package com.example.onestock.api
 import com.example.onestock.models.*
-import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -31,12 +31,17 @@ interface ApiService {
             @Query("apikey") apiKey: String
         ): Call<List<StockInfo>>
 
-
         @GET("quote/{symbol}")
         fun getQuote(
             @Path("symbol") symbol: String,
             @Query("apikey") apiKey: String
         ): Call<List<Quote>>
+
+        @GET("quote/{symbol}")
+        suspend fun getQuote2(
+            @Path("symbol") symbol: String,
+            @Query("apikey") apiKey: String
+        ): Response<List<Quote>>
 
         @GET("balance-sheet-statement/{symbol}?period=annual")
         fun getBalanceSheet(

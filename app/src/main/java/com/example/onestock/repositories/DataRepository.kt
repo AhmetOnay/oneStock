@@ -142,7 +142,7 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
                         quoteData.postValue(responseBody?.get(0))
                     }
                 } else {
-                    print("error: fetchBalanceSheet")
+                    print("error: fetchQuote")
                 }
             }
 
@@ -150,6 +150,21 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
                 print(call)
             }
         })
+    }
+
+    suspend fun fetchQuote2(symbol: String): Quote? {
+        return try {
+            val response = FMPApi.getQuote2(symbol, apiKey)
+            if (response.isSuccessful) {
+                response.body()?.firstOrNull()
+            } else {
+                print("error: fetchQuote2")
+                null
+            }
+        } catch (e: Exception) {
+            print(e)
+            null
+        }
     }
 }
 

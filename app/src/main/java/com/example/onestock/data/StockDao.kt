@@ -21,6 +21,9 @@ interface StockDao {
     @Query("SELECT * FROM Stock")
     fun getAllStocks(): Flow<List<Stock>>
 
+    @Query("SELECT symbol FROM Stock")
+    fun getAllStocksSymbols(): Flow<List<String>>
+
     @Query("SELECT * FROM Stock WHERE symbol=:symbol")
     fun getStockBySymbol(symbol: String): Flow<Stock?>
 
