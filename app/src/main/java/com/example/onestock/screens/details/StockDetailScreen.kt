@@ -66,7 +66,7 @@ fun StockDetailScreen(navController: NavHostController, symbol: String) {
                             if (!isInWatchlist) {
                                 viewModel.saveStock(symbol)
                             } else {
-                                viewModel.deleteStock(symbol)
+                                viewModel.deleteStock()
                             }
                         }
                     }) {

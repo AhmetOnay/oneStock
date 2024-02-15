@@ -91,8 +91,8 @@ class StockDetailViewModel(
     }
 
 
-    fun deleteStock(symbol: String) {
-
+    suspend fun deleteStock() {
+        stockRepository.deleteStock(stock)
     }
 
     fun getStock(symbol: String): Flow<Stock?> {
