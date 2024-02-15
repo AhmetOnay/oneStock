@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.onestock.common.NoteSerialization
 import com.example.onestock.models.Note
@@ -80,7 +81,8 @@ fun NoteItem(note: Note, onDeleteClick: (Long) -> Unit) {
         IconButton(onClick = { onDeleteClick(note.id) }) {
             Icon(
                 imageVector = Icons.Default.Delete,
-                contentDescription = "Delete note"
+                contentDescription = "Delete note",
+                tint = MaterialTheme.colors.error
             )
         }
     }
