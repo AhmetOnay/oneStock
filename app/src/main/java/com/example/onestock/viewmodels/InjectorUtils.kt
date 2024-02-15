@@ -34,10 +34,10 @@ object InjectorUtils {
         return StockViewModelFactory(repository, stockRepository)
     }
 
-    fun provideStockDetailScreenViewModelFactory(context: Context): StockDetailViewModelFactory {
+    fun provideStockDetailScreenViewModelFactory(context: Context, symbol: String): StockDetailViewModelFactory {
         val repository = getDataRepository()
         val stockRepository = getStockRepository(context)
-        return StockDetailViewModelFactory(repository, stockRepository)
+        return StockDetailViewModelFactory(repository, stockRepository, symbol)
     }
 
 }

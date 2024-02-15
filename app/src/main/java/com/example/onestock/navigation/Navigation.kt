@@ -20,11 +20,6 @@ fun SetupNavGraph(
 ) {
     val stockViewModel: StockViewModel =
         viewModel(factory = InjectorUtils.provideStockViewModelFactory(context))
-    val stockDetailViewModel: StockDetailViewModel = viewModel(
-        factory = InjectorUtils.provideStockDetailScreenViewModelFactory(
-            context
-        )
-    )
     NavHost(navController = navController, startDestination = Screens.Home.route) {
         composable(route = Screens.Home.route) {
             HomeScreen(navController, stockViewModel)
