@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.navigation.NavHostController
 import com.example.onestock.models.Quote
 import com.example.onestock.navigation.Screens
@@ -18,16 +19,19 @@ import com.example.onestock.viewmodels.StockViewModel
 
 @Composable
 fun WatchlistTab(navController: NavHostController, stockViewModel: StockViewModel) {
-    stockViewModel.getSavedStocksQuotesLiveData()
     val savedStocksList by stockViewModel.savedStocksQuotesLiveData.observeAsState(initial = emptyList())
-
-    LazyColumn {
-        items(savedStocksList) { stock ->
-            WatchlistItem(stock) {
-                navController.navigate(Screens.StockDetail.createRoute(stock.symbol))
+    if (savedStocksList.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+    } else
+        LazyColumn {
+            items(savedStocksList) { stock ->
+                WatchlistItem(stock) {
+                    navController.navigate(Screens.StockDetail.createRoute(stock.symbol))
+                }
             }
         }
-    }
 }
 
 @Composable

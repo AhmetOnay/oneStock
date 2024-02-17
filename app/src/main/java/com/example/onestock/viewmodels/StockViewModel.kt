@@ -4,6 +4,8 @@ import androidx.lifecycle.*
 import com.example.onestock.models.*
 import com.example.onestock.repositories.DataRepository
 import com.example.onestock.repositories.StockRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,17 +19,18 @@ class StockViewModel(private val dataRepository: DataRepository, private val sto
     val mostActiveData: LiveData<List<Quote>> = dataRepository.mostActiveData
     var generalSearchData: LiveData<List<StockInfo>> = dataRepository.generalSearchData
     private val _symbols = MutableStateFlow(listOf<String>())
-    val symbols: StateFlow<List<String>> = _symbols.asStateFlow()
+    private val symbols: StateFlow<List<String>> = _symbols.asStateFlow()
 
 
     init {
+        getMostActive()
         viewModelScope.launch {
             stockRepository.getAllStocksSymbols().collect { symbols ->
                 _symbols.value = symbols
+                getSavedStocksQuotesLiveData()
             }
         }
         //getStocksList()
-        getMostActive()
     }
 
     fun getStockData(symbols: String, interval: String) {
@@ -38,16 +41,15 @@ class StockViewModel(private val dataRepository: DataRepository, private val sto
         dataRepository.fetchStocksList()
     }
 
-    fun getSavedStocksQuotesLiveData() {
+    private fun getSavedStocksQuotesLiveData() {
         viewModelScope.launch {
-            val quotes = mutableListOf<Quote>()
-            symbols.value.forEach { symbol ->
-                val quote = dataRepository.fetchQuote2(symbol)
-                quote?.let { quotes.add(it) }
-            }
+            val quotes = symbols.value.map { symbol ->
+                async { dataRepository.fetchQuote2(symbol) }
+            }.awaitAll().filterNotNull()
             savedStocksQuotesLiveData.postValue(quotes)
         }
     }
+
 
     private fun getMostActive(){
         dataRepository.fetchMostActive()
