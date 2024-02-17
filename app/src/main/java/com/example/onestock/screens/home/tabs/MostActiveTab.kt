@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.navigation.NavHostController
 import com.example.onestock.models.Quote
 import com.example.onestock.navigation.Screens
@@ -17,13 +18,18 @@ import com.example.onestock.viewmodels.StockViewModel
 
 @Composable
 fun MostActiveTab(navController: NavHostController, stockViewModel: StockViewModel) {
-    val stocksL by stockViewModel.mostActiveData.observeAsState()
-    val stocksList = stocksL ?: emptyList()
+    val stocksList by stockViewModel.mostActiveData.observeAsState(initial = emptyList())
 
-    LazyColumn {
-        items(stocksList) { stock ->
-            MostActiveItem(stock) {
-                navController.navigate(Screens.StockDetail.createRoute(stock.symbol))
+    if (stocksList.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+    } else {
+        LazyColumn {
+            items(stocksList) { stock ->
+                MostActiveItem(stock) {
+                    navController.navigate(Screens.StockDetail.createRoute(stock.symbol))
+                }
             }
         }
     }
