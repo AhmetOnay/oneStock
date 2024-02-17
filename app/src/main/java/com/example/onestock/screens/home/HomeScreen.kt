@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -22,7 +23,6 @@ fun HomeScreen(navController: NavHostController, stockViewModel: StockViewModel)
     val scope = rememberCoroutineScope()
     val tabs = listOf("Watchlist", "Trending", "Search")
     var selectedTabIndex by remember { mutableStateOf(1) }
-
 
 
     //stockViewModel.getStockData("AAPL", "1min")
@@ -89,16 +89,29 @@ fun DrawerHeader() {
 
 @Composable
 fun DrawerBody(navController: NavHostController) {
-    Text(
-        "News",
+    Row(
         modifier = Modifier
-            .padding(16.dp)
-            .clickable {
-                navController.navigate(Screens.StockNews.route)
-            }
-    )
-    Text("Zakat", modifier = Modifier.padding(16.dp))
+            .fillMaxWidth()
+            .height(48.dp)
+            .clickable { navController.navigate(Screens.StockNews.route) }
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text("News")
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(48.dp)
+            .clickable { navController.navigate(Screens.StockNews.route) }
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text("Zakat")
+    }
 }
+
 
 @Composable
 fun StockList(category: String, txt: String) {
