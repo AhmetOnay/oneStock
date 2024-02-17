@@ -7,7 +7,6 @@ import com.example.onestock.repositories.StockRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.launch
 
 class StockViewModel(private val dataRepository: DataRepository, private val stockRepository: StockRepository) : ViewModel() {

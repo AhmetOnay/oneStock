@@ -49,4 +49,14 @@ interface ApiService {
             @Query("apikey") apiKey: String
         ): Call<List<BalanceSheet>>
     }
+    interface MarketauxApi{
+        @GET("news/all")
+        fun getNews(
+            @Query("countries") countries: String,
+            @Query("filter_entities") filterEntities: Boolean,
+            @Query("limit") limit: Int,
+            @Query("published_after") publishedAfter: String,
+            @Query("api_token") apiToken: String
+        ): Call<News>
+    }
 }

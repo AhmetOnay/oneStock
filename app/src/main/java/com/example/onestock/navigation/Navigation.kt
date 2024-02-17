@@ -7,9 +7,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.onestock.screens.HomeScreen
-import com.example.onestock.screens.StockDetailScreen
+import com.example.onestock.screens.details.StockDetailScreen
+import com.example.onestock.screens.news.StockNewsScreen
 import com.example.onestock.viewmodels.InjectorUtils
-import com.example.onestock.viewmodels.StockDetailViewModel
 import com.example.onestock.viewmodels.StockViewModel
 
 
@@ -27,6 +27,9 @@ fun SetupNavGraph(
         composable(route = Screens.StockDetail.route) { backStackEntry ->
             val symbol = requireNotNull(backStackEntry.arguments?.getString("symbol"))
             StockDetailScreen(navController, symbol)
+        }
+        composable(route = Screens.StockNews.route) {
+            StockNewsScreen(navController)
         }
     }
 }

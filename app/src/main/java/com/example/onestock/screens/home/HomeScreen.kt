@@ -1,5 +1,6 @@
 package com.example.onestock.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
@@ -10,6 +11,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.onestock.navigation.Screens
 import com.example.onestock.repositories.StockRepository
 import com.example.onestock.viewmodels.StockViewModel
 import kotlinx.coroutines.launch
@@ -25,7 +27,7 @@ fun HomeScreen(navController: NavHostController, stockViewModel: StockViewModel)
 
     //stockViewModel.getStockData("AAPL", "1min")
 
-    val stockData by stockViewModel.stockData.observeAsState()
+    //val stockData by stockViewModel.stockData.observeAsState()
 
 
     Scaffold(
@@ -47,7 +49,7 @@ fun HomeScreen(navController: NavHostController, stockViewModel: StockViewModel)
         },
         drawerContent = {
             DrawerHeader()
-            DrawerBody()
+            DrawerBody(navController)
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
@@ -86,8 +88,15 @@ fun DrawerHeader() {
 }
 
 @Composable
-fun DrawerBody() {
-    Text("News", modifier = Modifier.padding(16.dp))
+fun DrawerBody(navController: NavHostController) {
+    Text(
+        "News",
+        modifier = Modifier
+            .padding(16.dp)
+            .clickable {
+                navController.navigate(Screens.StockNews.route)
+            }
+    )
     Text("Zakat", modifier = Modifier.padding(16.dp))
 }
 
