@@ -43,12 +43,15 @@ class StockViewModel(private val dataRepository: DataRepository, private val sto
 
     private fun getSavedStocksQuotesLiveData() {
         viewModelScope.launch {
-            val quotes = symbols.value.map { symbol ->
-                async { dataRepository.fetchQuote2(symbol) }
-            }.awaitAll().filterNotNull()
+            val quotes = mutableListOf<Quote>()
+            symbols.value.forEach { symbol ->
+                val quote = dataRepository.fetchQuote2(symbol)
+                quote?.let { quotes.add(it) }
+            }
             savedStocksQuotesLiveData.postValue(quotes)
         }
     }
+
 
 
     private fun getMostActive(){
