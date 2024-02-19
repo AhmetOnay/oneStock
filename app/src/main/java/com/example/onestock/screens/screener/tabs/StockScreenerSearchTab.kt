@@ -13,7 +13,7 @@ import com.example.onestock.widgets.TextOptionPicker
 
 @Composable
 fun StockSearchTab(navController: NavHostController, viewModel: StockScreenerViewModel) {
-    val selectedCountryOption = remember { mutableStateOf("us") }
+    val selectedCountryOption = remember { mutableStateOf("US") }
     val selectedIndustryOption = remember { mutableStateOf("software") }
     var marketCapMoreThan by remember { mutableStateOf("") }
     var marketCapLowerThan by remember { mutableStateOf("") }
@@ -34,7 +34,7 @@ fun StockSearchTab(navController: NavHostController, viewModel: StockScreenerVie
         TextOptionPicker(
             selectedOption = selectedIndustryOption,
             modifier = Modifier.fillMaxWidth(),
-            options = listOf("Autos", "Banks", "Banks—Diversified", "Beverages Non-Alcoholic"),
+            options = listOf("Autos", "Banks", "Banks—Diversified", "Beverages Non-Alcoholic", "software"),
         )
         TextField(
             value = marketCapMoreThan,
