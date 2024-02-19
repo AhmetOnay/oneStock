@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 fun StockDetailScreen(navController: NavHostController, symbol: String) {
     val currentContext = LocalContext.current
     val viewModel: StockDetailViewModel = viewModel(
-        factory = InjectorUtils.provideStockDetailScreenViewModelFactory(
+        factory = InjectorUtils.provideStockDetailViewModelFactory(
             currentContext, symbol
         )
     )

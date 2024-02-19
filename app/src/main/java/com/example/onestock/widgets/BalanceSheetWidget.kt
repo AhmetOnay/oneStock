@@ -15,18 +15,22 @@ import java.util.Locale
 
 @Composable
 fun BalanceSheetWidget(balanceSheet: BalanceSheet) {
-    Column(modifier = Modifier.verticalScroll(rememberScrollState()).padding(16.dp)) {
+    Column(modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .padding(16.dp)) {
         DateHeaderView(date = balanceSheet.date)
 
         SectionTitle(title = "Assets")
-        ListItemView(label = "Current Assets", value = balanceSheet.cashAndCashEquivalents)
-        ListItemView(label = "Short Term \n Investments", value = balanceSheet.shortTermInvestments)
-        ListItemView(label = "Net Receivables", value = balanceSheet.netReceivables)
+        ListItemView(label = "Current Assets", value = balanceSheet.totalCurrentAssets)
+        ListItemView(label = "Non-Current\nAssets", value = balanceSheet.totalNonCurrentAssets)
         TotalView(label = "Total Assets", value = balanceSheet.totalAssets)
 
         SectionTitle(title = "Liabilities")
-        ListItemView(label = "Account Payables", value = balanceSheet.accountPayables)
-        ListItemView(label = "Short Term Debt", value = balanceSheet.shortTermDebt)
+        ListItemView(label = "Current Liabilities", value = balanceSheet.totalCurrentLiabilities)
+        ListItemView(
+            label = "Non-Current\nLiabilities",
+            value = balanceSheet.totalNonCurrentLiabilities
+        )
         TotalView(label = "Total Liabilities", value = balanceSheet.totalLiabilities)
 
         SectionTitle(title = "Equity")
@@ -95,7 +99,6 @@ fun TotalView(label: String, value: Long) {
 }
 
 fun formatNumber(number: Long): String {
-    // Format the number as needed, e.g., with commas
     return NumberFormat.getNumberInstance(Locale.getDefault()).format(number)
 }
 

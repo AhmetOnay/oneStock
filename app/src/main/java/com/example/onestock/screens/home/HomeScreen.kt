@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import com.example.onestock.navigation.Screens
 import com.example.onestock.repositories.StockRepository
 import com.example.onestock.viewmodels.StockViewModel
+import com.example.onestock.widgets.CustomScaffold
 import kotlinx.coroutines.launch
 
 @Composable
@@ -30,27 +31,9 @@ fun HomeScreen(navController: NavHostController, stockViewModel: StockViewModel)
     //val stockData by stockViewModel.stockData.observeAsState()
 
 
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = {
-            TopAppBar(
-                title = { Text("One Stock") },
-                backgroundColor = MaterialTheme.colors.primary,
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            scaffoldState.drawerState.open()
-                        }
-                    }) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
-                    }
-                }
-            )
-        },
-        drawerContent = {
-            DrawerHeader()
-            DrawerBody(navController)
-        }
+    CustomScaffold(
+        navController = navController,
+        topBarTitle = "One Stock",
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
             TabRow(
@@ -79,36 +62,6 @@ fun HomeScreen(navController: NavHostController, stockViewModel: StockViewModel)
                 2 -> StockSearchTab(navController, stockViewModel)
             }
         }
-    }
-}
-
-@Composable
-fun DrawerHeader() {
-    Text("One Stock", style = MaterialTheme.typography.h6, modifier = Modifier.padding(16.dp))
-}
-
-@Composable
-fun DrawerBody(navController: NavHostController) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(48.dp)
-            .clickable { navController.navigate(Screens.StockNews.route) }
-            .padding(horizontal = 16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text("News")
-    }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(48.dp)
-            .clickable { navController.navigate(Screens.StockNews.route) }
-            .padding(horizontal = 16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text("Zakat")
     }
 }
 

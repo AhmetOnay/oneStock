@@ -6,4 +6,6 @@ sealed class Screens(val route: String) {
         fun createRoute(symbol: String) = "stockDetail/$symbol"
     }
     object StockNews : Screens("stockNews")
+
+    object Zakat : Screens("zakat")
 }

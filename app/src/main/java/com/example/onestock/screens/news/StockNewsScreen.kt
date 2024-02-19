@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import com.example.onestock.models.NewsArticle
 import com.example.onestock.viewmodels.InjectorUtils
 import com.example.onestock.viewmodels.StockNewsViewModel
+import com.example.onestock.widgets.CustomScaffold
 
 
 @Composable
@@ -36,22 +37,9 @@ fun StockNewsScreen(navController: NavHostController) {
     val newsData by viewModel.stockNewsData.observeAsState()
 
 
-    Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("Stock News") },
-                navigationIcon = if (navController.previousBackStackEntry != null) {
-                    {
-                        IconButton(onClick = { navController.navigateUp() }) {
-                            Icon(
-                                imageVector = Icons.Filled.ArrowBack,
-                                contentDescription = "Back"
-                            )
-                        }
-                    }
-                } else {
-                    null
-                })
-        }
+    CustomScaffold(
+        navController = navController,
+        topBarTitle = "News",
     ) { innerPadding ->
         newsData?.let { news ->
             LazyColumn(modifier = Modifier.padding(innerPadding)) {

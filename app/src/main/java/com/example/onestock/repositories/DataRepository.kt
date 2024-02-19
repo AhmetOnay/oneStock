@@ -6,6 +6,7 @@ import com.example.onestock.models.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.HttpException
 import retrofit2.Response
 
 
@@ -150,6 +151,19 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
                 print(call)
             }
         })
+    }
+
+    suspend fun fetchBalanceSheet2(symbol: String): BalanceSheet? {
+        return try {
+            val response = FMPApi.getBalanceSheet2(symbol, apiKey)
+            return response.body()?.firstOrNull()
+        } catch (e: HttpException) {
+            print("HTTP error: fetchBalanceSheet")
+            null
+        } catch (e: Exception) {
+            print(e)
+            null
+        }
     }
 
     suspend fun fetchQuote2(symbol: String): Quote? {

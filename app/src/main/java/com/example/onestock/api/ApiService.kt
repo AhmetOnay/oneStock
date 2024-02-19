@@ -44,6 +44,12 @@ interface ApiService {
         ): Response<List<Quote>>
 
         @GET("balance-sheet-statement/{symbol}?period=annual")
+        suspend fun getBalanceSheet2(
+            @Path("symbol") symbol: String,
+            @Query("apikey") apiKey: String
+        ): Response<List<BalanceSheet>>
+
+        @GET("balance-sheet-statement/{symbol}?period=annual")
         fun getBalanceSheet(
             @Path("symbol") symbol: String,
             @Query("apikey") apiKey: String
