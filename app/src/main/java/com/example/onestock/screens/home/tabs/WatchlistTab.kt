@@ -20,18 +20,14 @@ import com.example.onestock.viewmodels.StockViewModel
 @Composable
 fun WatchlistTab(navController: NavHostController, stockViewModel: StockViewModel) {
     val savedStocksList by stockViewModel.savedStocksQuotesLiveData.observeAsState(initial = emptyList())
-    if (savedStocksList.isEmpty()) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
-    } else
-        LazyColumn {
-            items(savedStocksList) { stock ->
-                WatchlistItem(stock) {
-                    navController.navigate(Screens.StockDetail.createRoute(stock.symbol))
-                }
+
+    LazyColumn {
+        items(savedStocksList) { stock ->
+            WatchlistItem(stock) {
+                navController.navigate(Screens.StockDetail.createRoute(stock.symbol))
             }
         }
+    }
 }
 
 @Composable
