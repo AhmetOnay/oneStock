@@ -29,7 +29,7 @@ class ZakatViewModel(private val dataRepository: DataRepository) : ViewModel() {
             } else {
                 calculateZakatBasedOnLongTerm(selectedNumber)
             }
-            amountToDonate.value = "$result ${balanceSheetData?.reportedCurrency ?: ""}"
+            amountToDonate.value = "%.2f ${balanceSheetData?.reportedCurrency ?: ""}".format(result)
         }
     }
 
