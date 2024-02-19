@@ -40,65 +40,50 @@ fun ZakatScreen(navController: NavHostController) {
                 .padding(8.dp)
                 .fillMaxWidth()
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                NumberPicker(
-                    selectedNumber = selectedNumber,
-                    numberRange = 1..100,
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(60.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                TextOptionPicker(
-                    selectedOption = selectedOption2,
-                    options = listOf(InvestOption.SHORT.id, InvestOption.LONG.id),
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(60.dp)
-                )
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                TextField(
-                    value = stockSymbol,
-                    onValueChange = { stockSymbol = it },
-                    label = { Text("Symbol") },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(60.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = amountToDonate,
-                    modifier = Modifier
-                        .weight(1f)
-                        .align(Alignment.CenterVertically)
-                )
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Button(
-                    onClick = {
+            NumberPicker(
+                selectedNumber = selectedNumber,
+                numberRange = 1..100,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            TextOptionPicker(
+                selectedOption = selectedOption2,
+                options = listOf(InvestOption.SHORT.id, InvestOption.LONG.id),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            TextField(
+                value = stockSymbol,
+                onValueChange = { stockSymbol = it },
+                label = { Text("Symbol") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+            )
+            Text(
+                text = amountToDonate,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            )
+            Button(
+                onClick = {
+                    if(!stockSymbol.isNullOrBlank()){
                         viewModel.calculateZakat(
                             selectedNumber.value.toLong(),
                             selectedOption2.value,
                             stockSymbol
                         )
-                    }, modifier = Modifier
-                        .width(150.dp)
-                        .height(50.dp)
-                ) {
-                    Text("Calculate")
-                }
+                    }
+                }, modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            ) {
+                Text("Calculate")
             }
         }
     }

@@ -10,13 +10,33 @@ import com.example.onestock.repositories.DataRepository
 import kotlinx.coroutines.launch
 
 class StockScreenerViewModel(private val dataRepository: DataRepository) : ViewModel() {
-    var _stockScreenerSearchData: MutableLiveData<List<Screener>> = dataRepository.stockScreenerSearchData
+    var _stockScreenerSearchData: MutableLiveData<List<Screener>> =
+        dataRepository.stockScreenerSearchData
     var stockScreenerSearchData: LiveData<List<Screener>> = _stockScreenerSearchData
     var searchCompleted = mutableStateOf(false)
 
-    fun search(country:String, industry:String, marketCapMoreThan: Long){
+    fun search(
+        country: String?,
+        industry: String?,
+        marketCapMoreThan: Long?,
+        marketCapLowerThan: Long?,
+        dividendMoreThan: Double?,
+        dividendLowerThan: Double?,
+        volumeMoreThan: Long?,
+        volumeLowerThan: Long?
+
+    ) {
         viewModelScope.launch {
-            dataRepository.fetchScreener(country, industry, marketCapMoreThan)
+            dataRepository.fetchScreener(
+                country,
+                industry,
+                marketCapMoreThan,
+                marketCapLowerThan,
+                dividendMoreThan,
+                dividendLowerThan,
+                volumeMoreThan,
+                volumeLowerThan
+            )
             searchCompleted.value = true
         }
     }

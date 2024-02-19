@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.*
@@ -27,9 +28,10 @@ fun NumberPicker(
     var expanded by remember { mutableStateOf(false) }
     val numbers = numberRange.map { it.toString() }
 
-    Box(modifier = modifier.wrapContentWidth(Alignment.Start)) {
+    Box(modifier = modifier.fillMaxWidth()) {
         TextField(
             value = selectedNumber.value,
+            modifier = modifier.fillMaxWidth(),
             onValueChange = { newValue ->
                 selectedNumber.value = newValue.filter { it.isDigit() }
             },

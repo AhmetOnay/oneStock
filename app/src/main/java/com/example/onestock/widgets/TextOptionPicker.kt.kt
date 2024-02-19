@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.*
@@ -26,7 +27,7 @@ fun TextOptionPicker(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Box(modifier = modifier.wrapContentWidth(Alignment.Start)) {
+    Box(modifier = modifier.fillMaxWidth()) {
         TextField(
             value = selectedOption.value,
             onValueChange = { newValue ->
@@ -34,6 +35,7 @@ fun TextOptionPicker(
                     selectedOption.value = newValue
                 }
             },
+            modifier = Modifier.fillMaxWidth(),
             readOnly = true,
             trailingIcon = {
                 IconButton(onClick = { expanded = true }) {

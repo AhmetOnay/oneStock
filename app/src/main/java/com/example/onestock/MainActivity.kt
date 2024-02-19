@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
             ExistingPeriodicWorkPolicy.KEEP,
             workRequest
         )
-        triggerWork()
+        //triggerWork()
     }
 
     private fun checkAndRequestNotificationPermission() {

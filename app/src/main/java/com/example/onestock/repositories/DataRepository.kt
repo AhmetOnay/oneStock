@@ -186,19 +186,24 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
     fun fetchScreener(
         country: String?,
         industry: String?,
-        marketCapMoreThan: Long?
+        marketCapMoreThan: Long?,
+        marketCapLowerThan: Long?,
+        dividendMoreThan: Double?,
+        dividendLowerThan: Double?,
+        volumeMoreThan: Long?,
+        volumeLowerThan: Long?
     ) {
         FMPApi.getScreener(
             marketCapMoreThan = marketCapMoreThan,
-            marketCapLowerThan = null,
+            marketCapLowerThan = marketCapLowerThan,
             priceMoreThan = null,
             priceLowerThan = null,
             betaMoreThan = null,
             betaLowerThan = null,
-            volumeMoreThan = null,
-            volumeLowerThan = null,
-            dividendMoreThan = null,
-            dividendLowerThan = null,
+            volumeMoreThan = volumeMoreThan,
+            volumeLowerThan = volumeLowerThan,
+            dividendMoreThan = dividendMoreThan,
+            dividendLowerThan = dividendLowerThan,
             isEtf = null,
             isActivelyTrading = null,
             sector = null,
