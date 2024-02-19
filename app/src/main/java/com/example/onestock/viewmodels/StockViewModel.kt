@@ -23,8 +23,8 @@ class StockViewModel(private val dataRepository: DataRepository, private val sto
 
 
     init {
-        /*getMostActive()
-        viewModelScope.launch {
+        //getMostActive()
+       /* viewModelScope.launch {
             stockRepository.getAllStocksSymbols().collect { symbols ->
                 _symbols.value = symbols
                 getSavedStocksQuotesLiveData()

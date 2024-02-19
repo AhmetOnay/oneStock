@@ -54,6 +54,50 @@ interface ApiService {
             @Path("symbol") symbol: String,
             @Query("apikey") apiKey: String
         ): Call<List<BalanceSheet>>
+
+        @GET("stock-screener")
+        fun getScreener(
+            @Query("marketCapMoreThan") marketCapMoreThan: Long?,
+            @Query("marketCapLowerThan") marketCapLowerThan: Long?,
+            @Query("priceMoreThan") priceMoreThan: Double?,
+            @Query("priceLowerThan") priceLowerThan: Double?,
+            @Query("betaMoreThan") betaMoreThan: Double?,
+            @Query("betaLowerThan") betaLowerThan: Double?,
+            @Query("volumeMoreThan") volumeMoreThan: Long?,
+            @Query("volumeLowerThan") volumeLowerThan: Long?,
+            @Query("dividendMoreThan") dividendMoreThan: Double?,
+            @Query("dividendLowerThan") dividendLowerThan: Double?,
+            @Query("isEtf") isEtf: Boolean?,
+            @Query("isActivelyTrading") isActivelyTrading: Boolean?,
+            @Query("sector") sector: String?,
+            @Query("industry") industry: String?,
+            @Query("country") country: String?,
+            @Query("exchange") exchange: String?,
+            @Query("limit") limit: Int?,
+            @Query("apikey") apiKey: String
+        ): Call<List<Screener>>
+
+        @GET("stock-screener")
+        suspend fun getScreener2(
+            @Query("marketCapMoreThan") marketCapMoreThan: Long?,
+            @Query("marketCapLowerThan") marketCapLowerThan: Long?,
+            @Query("priceMoreThan") priceMoreThan: Double?,
+            @Query("priceLowerThan") priceLowerThan: Double?,
+            @Query("betaMoreThan") betaMoreThan: Double?,
+            @Query("betaLowerThan") betaLowerThan: Double?,
+            @Query("volumeMoreThan") volumeMoreThan: Long?,
+            @Query("volumeLowerThan") volumeLowerThan: Long?,
+            @Query("dividendMoreThan") dividendMoreThan: Double?,
+            @Query("dividendLowerThan") dividendLowerThan: Double?,
+            @Query("isEtf") isEtf: Boolean?,
+            @Query("isActivelyTrading") isActivelyTrading: Boolean?,
+            @Query("sector") sector: String?,
+            @Query("industry") industry: String?,
+            @Query("country") country: String?,
+            @Query("exchange") exchange: String?,
+            @Query("limit") limit: Int?,
+            @Query("apikey") apiKey: String
+        ): Response<List<Screener>>
     }
     interface MarketauxApi{
         @GET("news/all")

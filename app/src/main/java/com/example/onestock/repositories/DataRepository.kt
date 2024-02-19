@@ -18,6 +18,8 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
     var balanceSheetData = MutableLiveData<BalanceSheet>()
     var quoteData = MutableLiveData<Quote>()
     var generalSearchData = MutableLiveData<List<StockInfo>>()
+    var stockScreenerSearchData = MutableLiveData<List<Screener>>()
+
 
     val apiKey = "5qrH2plVtrYf8zlY8RxQLo16b0xgaOau"
 
@@ -175,6 +177,93 @@ class DataRepository(private val FMPApi: ApiService.FMPApi) {
                 print("error: fetchQuote2")
                 null
             }
+        } catch (e: Exception) {
+            print(e)
+            null
+        }
+    }
+
+    fun fetchScreener(
+        country: String?,
+        industry: String?,
+        marketCapMoreThan: Long?
+    ) {
+        FMPApi.getScreener(
+            marketCapMoreThan = marketCapMoreThan,
+            marketCapLowerThan = null,
+            priceMoreThan = null,
+            priceLowerThan = null,
+            betaMoreThan = null,
+            betaLowerThan = null,
+            volumeMoreThan = null,
+            volumeLowerThan = null,
+            dividendMoreThan = null,
+            dividendLowerThan = null,
+            isEtf = null,
+            isActivelyTrading = null,
+            sector = null,
+            industry = industry,
+            country = country,
+            exchange = null,
+            limit = null,
+            apiKey = apiKey
+        ).enqueue(object : Callback<List<Screener>> {
+            override fun onResponse(
+                call: Call<List<Screener>>, response: Response<List<Screener>>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let { responseBody ->
+                        if(responseBody.isNotEmpty()){
+                            stockScreenerSearchData.postValue(responseBody)
+                        }
+                    }
+                } else {
+                    print("error: fetchScreener")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Screener>>, t: Throwable) {
+                print("error: fetchScreener onFailure")
+            }
+        })
+    }
+
+
+    suspend fun fetchScreener2(
+        country: String?,
+        industry: String?,
+        marketCapMoreThan: Long?
+    ): List<Screener>? {
+        return try {
+            val response = FMPApi.getScreener2(
+                marketCapMoreThan = marketCapMoreThan,
+                marketCapLowerThan = null,
+                priceMoreThan = null,
+                priceLowerThan = null,
+                betaMoreThan = null,
+                betaLowerThan = null,
+                volumeMoreThan = null,
+                volumeLowerThan = null,
+                dividendMoreThan = null,
+                dividendLowerThan = null,
+                isEtf = null,
+                isActivelyTrading = null,
+                sector = null,
+                industry = industry,
+                country = country,
+                exchange = null,
+                limit = null,
+                apiKey = apiKey
+            )
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                print("error: fetchScreener2")
+                null
+            }
+        } catch (e: HttpException) {
+            print("HTTP error: fetchScreener2")
+            null
         } catch (e: Exception) {
             print(e)
             null

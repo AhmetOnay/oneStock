@@ -6,9 +6,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.onestock.screens.HomeScreen
+import com.example.onestock.screens.home.HomeScreen
 import com.example.onestock.screens.details.StockDetailScreen
 import com.example.onestock.screens.news.StockNewsScreen
+import com.example.onestock.screens.screener.StockScreenerScreen
 import com.example.onestock.screens.zakat.ZakatScreen
 import com.example.onestock.viewmodels.InjectorUtils
 import com.example.onestock.viewmodels.StockViewModel
@@ -34,6 +35,9 @@ fun SetupNavGraph(
         }
         composable(route = Screens.Zakat.route) {
             ZakatScreen(navController)
+        }
+        composable(route = Screens.StockScreener.route) {
+            StockScreenerScreen(navController)
         }
     }
 }

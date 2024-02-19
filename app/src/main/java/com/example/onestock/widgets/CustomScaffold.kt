@@ -21,6 +21,7 @@ fun CustomScaffold(
     topBarTitle: String = "One Stock",
     drawerHeader: @Composable () -> Unit = { DrawerHeader() },
     drawerBody: @Composable () -> Unit = { DrawerBody(navController) },
+    overflowMenuContent: (@Composable () -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -39,6 +40,9 @@ fun CustomScaffold(
                     }) {
                         Icon(Icons.Filled.Menu, contentDescription = "Menu")
                     }
+                },
+                actions = {
+                    overflowMenuContent?.invoke()
                 }
             )
         },
@@ -77,7 +81,16 @@ fun DrawerBody(navController: NavHostController) {
     ) {
         Text("News")
     }
-
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(48.dp)
+            .clickable { navController.navigate(Screens.StockScreener.route) }
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text("Stock Screener")
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()

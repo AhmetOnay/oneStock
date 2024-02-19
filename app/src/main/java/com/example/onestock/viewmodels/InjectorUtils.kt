@@ -42,4 +42,9 @@ object InjectorUtils {
         val dataRepository = getDataRepository()
         return ZakatViewModelFactory(dataRepository)
     }
+
+    fun provideStockScreenerViewModelFactory(): StockScreenerViewModelFactory {
+        val dataRepository = getDataRepository()
+        return StockScreenerViewModelFactory(dataRepository)
+    }
 }
