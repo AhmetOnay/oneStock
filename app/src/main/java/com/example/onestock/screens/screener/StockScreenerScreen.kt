@@ -36,7 +36,7 @@ fun StockScreenerScreen(navController: NavHostController) {
     CustomScaffold(
         navController = navController,
         topBarTitle = "Stock Screener",
-        overflowMenuContent = { OverflowMenu() }
+        overflowMenuContent = if (selectedTabIndex == 1) {{ OverflowMenu(viewModel) }} else null
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
             TabRow(
@@ -68,7 +68,7 @@ fun StockScreenerScreen(navController: NavHostController) {
 }
 
 @Composable
-fun OverflowMenu() {
+fun OverflowMenu(viewModel: StockScreenerViewModel) {
     var showMenu by remember { mutableStateOf(false) }
 
     IconButton(onClick = { showMenu = !showMenu }) {
@@ -81,23 +81,21 @@ fun OverflowMenu() {
     ) {
         DropdownMenuItem(onClick = {
             showMenu = false
+            viewModel.sortAscendingByMarketCap()
         }) {
-            Text("Sort Asc")
+            Text("Sort asc")
         }
         DropdownMenuItem(onClick = {
+            viewModel.sortDescendingByMarketCap()
             showMenu = false
         }) {
             Text("Sort desc")
         }
         DropdownMenuItem(onClick = {
+            viewModel.sortStocksByHighestMarketCap()
             showMenu = false
         }) {
-            Text("Sort by Marketcap")
-        }
-        DropdownMenuItem(onClick = {
-            showMenu = false
-        }) {
-            Text("Sort by Marketcap")
+            Text("Sort by highest Marketcap")
         }
     }
 }

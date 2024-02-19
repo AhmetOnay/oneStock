@@ -37,7 +37,12 @@ fun StockSearchTab(navController: NavHostController, viewModel: StockScreenerVie
         )
         Button(
             onClick = {
-                viewModel.search(selectedCountryOption.value, selectedIndustryOption.value, marketCapMoreThan.toLong())
+                val marketCap = marketCapMoreThan.toLongOrNull()
+                if (marketCap != null) {
+                    viewModel.search(selectedCountryOption.value, selectedIndustryOption.value, marketCapMoreThan.toLong())
+                } else {
+                    viewModel.search(selectedCountryOption.value, selectedIndustryOption.value, 0)
+                }
             }, modifier = Modifier
                 .width(150.dp)
                 .height(50.dp)

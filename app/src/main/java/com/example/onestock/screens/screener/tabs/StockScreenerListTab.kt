@@ -17,19 +17,16 @@ import com.example.onestock.viewmodels.StockScreenerViewModel
 
 
 @Composable
-fun StockScreenerListTab(navController: NavHostController, stockScreenerViewModel: StockScreenerViewModel) {
+fun StockScreenerListTab(
+    navController: NavHostController,
+    stockScreenerViewModel: StockScreenerViewModel
+) {
     val stocksList by stockScreenerViewModel.stockScreenerSearchData.observeAsState(initial = emptyList())
 
-    if (stocksList.isEmpty()) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
-    } else {
-        LazyColumn {
-            items(stocksList) { stock ->
-                StockScreenerItem(stock) {
-                    navController.navigate(Screens.StockDetail.createRoute(stock.symbol))
-                }
+    LazyColumn {
+        items(stocksList) { stock ->
+            StockScreenerItem(stock) {
+                navController.navigate(Screens.StockDetail.createRoute(stock.symbol))
             }
         }
     }
