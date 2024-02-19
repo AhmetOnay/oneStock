@@ -17,7 +17,7 @@ object InjectorUtils {
         return StockRepository.getInstance(OneStockDatabase.getDatabase(context.applicationContext).stockDao())
     }
 
-    private fun getStockNewsRepository(): StockNewsRepository  {
+    fun getStockNewsRepository(): StockNewsRepository  {
         val marketauxApi = RetrofitClient.marketauxApiService
         return StockNewsRepository(marketauxApi)
     }

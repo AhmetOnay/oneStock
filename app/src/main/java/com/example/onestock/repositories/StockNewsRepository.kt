@@ -37,4 +37,21 @@ class StockNewsRepository(private val marketaux: ApiService.MarketauxApi) {
             })
     }
 
+    fun fetchNewsSynchronously(countries: String, filterEntities: Boolean, limit: Int, publishedAfter: String): News? {
+        return try {
+            val response = marketaux.getNews(countries = countries,
+                filterEntities = filterEntities,
+                limit = limit,
+                publishedAfter = publishedAfter,
+                apiToken = apiKey).execute()
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
 }
