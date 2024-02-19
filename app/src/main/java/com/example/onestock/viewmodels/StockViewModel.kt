@@ -11,10 +11,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class StockViewModel(private val dataRepository: DataRepository, private val stockRepository: StockRepository) : ViewModel() {
+class StockViewModel(
+    private val dataRepository: DataRepository,
+    private val stockRepository: StockRepository
+) : ViewModel() {
 
     val stockData: LiveData<TimeSeries> = dataRepository.timeSeriesData
     val savedStocksQuotesLiveData = MutableLiveData<List<Quote>>()
+
     //val stocksListData: LiveData<List<StockInfo>> = dataRepository.stocksListData
     val mostActiveData: LiveData<List<Quote>> = dataRepository.mostActiveData
     var generalSearchData: LiveData<List<StockInfo>> = dataRepository.generalSearchData
@@ -23,13 +27,13 @@ class StockViewModel(private val dataRepository: DataRepository, private val sto
 
 
     init {
-        //getMostActive()
-       /* viewModelScope.launch {
+        getMostActive()
+        viewModelScope.launch {
             stockRepository.getAllStocksSymbols().collect { symbols ->
                 _symbols.value = symbols
                 getSavedStocksQuotesLiveData()
             }
-        }*/
+        }
         //getStocksList()
     }
 
@@ -53,17 +57,15 @@ class StockViewModel(private val dataRepository: DataRepository, private val sto
     }
 
 
-
-    private fun getMostActive(){
+    private fun getMostActive() {
         dataRepository.fetchMostActive()
     }
 
-    fun generalSearch(txt: String){
+    fun generalSearch(txt: String) {
         if (txt.isNotBlank()) {
             dataRepository.fetchGeneralSearch(txt)
         }
     }
-
 
 
 }
