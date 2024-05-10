@@ -20,6 +20,6 @@ class StockNewsViewModel(private val stockNewsRepository: StockNewsRepository): 
     private fun getNews(){
         val todayDate = LocalDate.now()
         val formattedDateTime = todayDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T00:00"
-        stockNewsRepository.fetchNews("us", true, 10, formattedDateTime)
+        stockNewsRepository.fetchNews("us", true, 3, formattedDateTime)
     }
 }
