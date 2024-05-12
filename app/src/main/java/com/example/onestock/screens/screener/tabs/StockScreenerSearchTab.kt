@@ -1,4 +1,4 @@
-package com.example.onestock.screens
+package com.example.onestock.screens.screener.tabs
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions

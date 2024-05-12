@@ -13,8 +13,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.onestock.screens.StockSearchTab
 import com.example.onestock.screens.screener.tabs.StockScreenerListTab
+import com.example.onestock.screens.screener.tabs.StockSearchTab
 import com.example.onestock.viewmodels.InjectorUtils
 import com.example.onestock.viewmodels.StockScreenerViewModel
 
