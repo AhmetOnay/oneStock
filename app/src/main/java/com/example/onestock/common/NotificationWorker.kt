@@ -31,7 +31,7 @@ class NotificationWorker (appContext: Context, workerParams: WorkerParameters):
             try {
                 val todayDate = LocalDate.now()
                 val formattedDateTime = todayDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T00:00"
-                val news = stockNewsRepository.fetchNewsSynchronously("us", true, 3, formattedDateTime)
+                val news = stockNewsRepository.fetchNewsSynchronously("us", true, 10, formattedDateTime)
                 showNotification(news)
             } catch (e: Exception) {
                 print(e)
@@ -58,7 +58,7 @@ class NotificationWorker (appContext: Context, workerParams: WorkerParameters):
         }
 
         val notification = NotificationCompat.Builder(applicationContext, channelId)
-            .setSmallIcon(R.drawable.icon2_background)
+            .setSmallIcon(R.drawable.moneyicon)
             .setContentTitle("Stock Market News")
             .setContentText(news?.data?.get(0)?.title)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
