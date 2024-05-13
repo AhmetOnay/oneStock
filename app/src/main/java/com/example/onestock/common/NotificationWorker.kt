@@ -31,7 +31,7 @@ class NotificationWorker (appContext: Context, workerParams: WorkerParameters):
             try {
                 val todayDate = LocalDate.now()
                 val formattedDateTime = todayDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T00:00"
-                val news = stockNewsRepository.fetchNewsSynchronously("us", true, 10, formattedDateTime)
+                val news = stockNewsRepository.fetchNewsSynchronously("us", true, 3, formattedDateTime)
                 showNotification(news)
             } catch (e: Exception) {
                 print(e)
