@@ -1,4 +1,4 @@
-package com.example.onestock.screens
+package com.example.onestock.screens.home.tabs
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

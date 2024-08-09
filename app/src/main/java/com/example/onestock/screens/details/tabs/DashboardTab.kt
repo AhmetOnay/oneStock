@@ -1,4 +1,4 @@
-package com.example.onestock.screens
+package com.example.onestock.screens.details.tabs
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -7,10 +7,11 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LiveData
 import com.example.onestock.models.BalanceSheet
 import com.example.onestock.models.Quote
+import com.example.onestock.widgets.BalanceSheetWidget
 import com.example.onestock.widgets.QuoteWidget
+
 
 @Composable
 fun DashboardTab(balanceSheetData: BalanceSheet?, quoteData: Quote?, innerPadding: PaddingValues) {

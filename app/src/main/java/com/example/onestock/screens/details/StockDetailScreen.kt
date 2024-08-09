@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.onestock.screens.DashboardTab
+import com.example.onestock.screens.details.tabs.DashboardTab
 import com.example.onestock.screens.details.tabs.NoteTab
 import com.example.onestock.viewmodels.InjectorUtils
 import com.example.onestock.viewmodels.StockDetailViewModel

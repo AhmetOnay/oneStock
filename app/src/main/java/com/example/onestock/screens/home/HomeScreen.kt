@@ -3,15 +3,13 @@ package com.example.onestock.screens.home
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.onestock.screens.MostActiveTab
-import com.example.onestock.screens.StockSearchTab
-import com.example.onestock.screens.WatchlistTab
+import com.example.onestock.screens.home.tabs.MostActiveTab
+import com.example.onestock.screens.home.tabs.StockSearchTab
+import com.example.onestock.screens.home.tabs.WatchlistTab
 import com.example.onestock.viewmodels.StockViewModel
 import com.example.onestock.widgets.CustomScaffold
 

@@ -1,4 +1,4 @@
-package com.example.onestock.screens
+package com.example.onestock.widgets
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -11,7 +11,6 @@ import androidx.compose.ui.unit.dp
 import com.example.onestock.models.BalanceSheet
 import java.text.NumberFormat
 import java.util.Locale
-
 
 @Composable
 fun BalanceSheetWidget(balanceSheet: BalanceSheet) {

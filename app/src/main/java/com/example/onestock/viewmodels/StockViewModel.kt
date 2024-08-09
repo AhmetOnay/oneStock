@@ -34,7 +34,7 @@ class StockViewModel(
                 getSavedStocksQuotesLiveData()
             }
         }
-        //getStocksList()
+        getStocksList()
     }
 
     fun getStockData(symbols: String, interval: String) {
